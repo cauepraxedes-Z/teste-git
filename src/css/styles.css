@@ -144,3 +144,20 @@ main {
 .container .profile-results.hide {
   display: none;
 }
+
+.counters{
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  margin-top: 80PX;
+}
+.counters h4{
+  font-weight: normal;
+  font-size: 0.75rem;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.counters .spam{
+  font-size: 2rem;
+  font-weight: bold;
+}
