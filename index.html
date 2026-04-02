@@ -1,12 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Visualizador de Perfil do GitHub</title>
+
+    <link rel="stylesheet" href="./src/css/reset.css">
+    <link rel="stylesheet" href="./src/css/styles.css">
+    <link rel="stylesheet" href="./src/css/animations.css">
+    <link rel="stylesheet" href="./src/css/responsive.css">
+  
+
 </head>
 <body>
-    <h1>MEU SITE</h1>
-    
+    <main>
+        <i class="devicon-github-original"></i>
+
+        <section class="container">
+            <header>
+                <h2>Buscar Usuário</h2>
+                <p class="search-hint">Digite o nome de usuário do GitHub e tenha acesso aos dados do perfil</p>
+                <input type="text" id="input-search" placeholder="Digite o nome do usuário no GitHub">
+                
+                <input type="button" value="Buscar" id="btn-search">
+            </header>
+
+            <div class="profile-results" id="profile-results">
+                <!-- Os dados aparecerão aqui via JS -->
+            </div>
+        </section>
+    </main>
+    <!-- Adicionado ./ e defer para evitar erros de carregamento -->
+    <script src="./src/index.js" defer></script>
 </body>
 </html>
