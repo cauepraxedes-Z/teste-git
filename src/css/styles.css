@@ -245,7 +245,7 @@ main {
 
 .repo-badge {
   background: rgba(0, 0, 0, 0.1); /* Removido o fundo cinza */
-    color: #;
+    color: #dfdcdc;
     font-size: 0.9rem;
     display: flex;
     align-items: center;
