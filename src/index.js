@@ -1,4 +1,4 @@
-import { fetchUser } from './api.js';
+import { fetchUser, fetchUserRepos } from './api.js';
 import { getInputValue, showLoading, clearProfile, showAlert, renderUser, bindSearch } from './ui.js';
 
 async function handleSearch() {
@@ -20,7 +20,16 @@ async function handleSearch() {
       return;
     }
 
-    renderUser(userData);
+    // buscar últimos repositórios (últimos 10 por padrão)
+    let repos = [];
+    try {
+      repos = await fetchUserRepos(userName, 10);
+    } catch (err) {
+      console.warn('Não foi possível obter repositórios:', err);
+      repos = [];
+    }
+
+    renderUser(userData, repos);
   } catch (error) {
     console.error('Erro:', error);
     showAlert('Erro ao buscar dados. Verifique sua conexão.');

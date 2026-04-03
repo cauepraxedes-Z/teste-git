@@ -149,7 +149,7 @@ main {
   display: flex;
   gap: 32px;
   justify-content: center;
-  margin-top: 80PX;
+  margin-top: 40px;
 }
 .counters h4{
   font-weight: normal;
@@ -158,6 +158,199 @@ main {
   text-transform: uppercase;
 }
 .counters .spam{
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 2.2rem;
+  font-weight: 700;
+  display: block;
+}
+.repository-stats{
+  display: flex;
+ flex-direction: column;
+ align-items: flex-start;
+
+}
+/* Cabeçalho do Perfil */
+.profile-header-custom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.bio-text {
+    color: #666;
+    font-size: 1rem;
+}
+
+/* Contadores (Seguidores/Seguindo) */
+.profile-counters {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin: 2rem 0 3rem;
+}
+
+.counter-item h4 {
+    font-size: 0.7rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+}
+
+.counter-item span {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #000;
+}
+
+/* Grid de Repositórios */
+.repo-section-title {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+.repositories {
+   display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+}
+
+/* Card Individual (IGUAL À IMAGEM) */
+.repository-card {
+    background: #fff;
+    border: 1px solid #dfdcdc; /* Borda bem suave */
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: left;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.repo-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1.2rem;
+    display: block;
+    text-decoration: none;
+}
+
+/* Lista de Status Vertical */
+.repository-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.repo-badge {
+  background: rgba(0, 0, 0, 0.1); /* Removido o fundo cinza */
+    color: #;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: none; /* Removida a borda */
+    padding: 0;
+}
+
+.repo-section-title {
+   font-size: 1.8rem;
+    font-weight: 600;
+    margin: 2rem 0;
+    color: #1a1a1a;
+}
+
+.profile-counters {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
+.counter-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.repo-name a { color: #111; text-decoration:none; font-weight:600 }
+
+/* Ajuste Responsivo */
+@media (max-width: 900px) {
+    .repositories {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .repositories {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Component styles used by ui.js */
+.loading {
+  font-size: 1rem;
+  color: var(--muted-foreground);
+  padding: var(--spacing-md) 0;
+}
+
+.profile-card {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: stretch;
+  background: var(--card);
+}
+
+.profile-header-custom {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--muted);
+}
+
+.profile-info {
+  text-align: left;
+}
+
+.profile-name {
+  margin: 6px 0;
+  font-size: 1.25rem;
+}
+
+.profile-link {
+  color: #0366d6;
+  text-decoration: underline;
+}
+
+.repo-section {
+  margin-top: 16px;
+}
+
+.repo-desc {
+  margin-top: 8px;
+  color: #444;
+}
+
+
+.repo-section-title {
+  margin: 12px 0 6px 0;
+}
+
+.no-repos {
+  margin-top: 12px;
+  color: #666;
 }

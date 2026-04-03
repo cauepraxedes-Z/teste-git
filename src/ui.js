@@ -1,23 +1,25 @@
-const inputSearch = document.getElementById('input-search');
-const btnSearch = document.getElementById('btn-search');
-const profileResults = document.getElementById('profile-results');
-const alertContainer = document.getElementById('alert-container');
+function getEl(id) {
+  return document.getElementById(id);
+}
 
 export function getInputValue() {
-  return inputSearch.value.trim();
+  const input = getEl('input-search');
+  return input ? input.value.trim() : '';
 }
 
 export function showLoading() {
-  profileResults.innerHTML = '<p class="loading">Carregando...</p>';
+  const profileResults = getEl('profile-results');
+  if (profileResults) profileResults.innerHTML = '<p class="loading">Carregando...</p>';
 }
 
 export function clearProfile() {
-  profileResults.innerHTML = '';
+  const profileResults = getEl('profile-results');
+  if (profileResults) profileResults.innerHTML = '';
 }
 
 export function showAlert(message, timeout = 4000) {
+  const alertContainer = getEl('alert-container');
   if (!alertContainer) {
-    // Fallback para ambientes sem container
     window.alert(message);
     return;
   }
@@ -31,28 +33,66 @@ export function showAlert(message, timeout = 4000) {
   }, timeout);
 }
 
-export function renderUser(userData) {
-  profileResults.innerHTML = `
-    <div class="profile-card" style="margin-top: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 8px; display:flex; gap:16px; align-items:center;">
-        <img src="${userData.avatar_url}" alt="Avatar" style="width: 100px; border-radius: 50%;">
-        <div class="profile-info">
-            <h2 style="margin: 10px 0;">${userData.name || userData.login}</h2>
-            <p>${userData.bio || 'Este usuário não possui biografia.'}</p>
-            <a href="${userData.html_url}" target="_blank" style="color: blue; text-decoration: underline;">Ver Perfil Completo</a>
-        </div>
-    </div>
+export function renderUser(userData, repos = []) {
+  const profileResults = getEl('profile-results');
+  if (!profileResults) return;
 
-    <div class="counters" style="display:flex; gap:12px; margin-top:12px;">
-        <div class="counter-item" style="padding:8px; border:1px solid #eee; border-radius:6px;">
-            <h4 style="margin:0">👥 Seguidores</h4>
-            <span class="spam">${userData.followers}</span>
+  const name = userData.name || userData.login;
+  const bio = userData.bio || 'Não possui bio cadastrada 😟';
+
+  profileResults.innerHTML = `
+    <div class="profile-card">
+      <div class="profile-header-custom">
+        <img class="avatar" src="${userData.avatar_url}" alt="Avatar de ${name}">
+        <div class="profile-info">
+          <h2 class="profile-name">${name}</h2>
+          <p class="bio-text">${bio}</p>
+          <a class="profile-link" href="${userData.html_url}" target="_blank" rel="noopener">Ver Perfil Completo</a>
         </div>
-        <div class="counter-item" style="padding:8px; border:1px solid #eee; border-radius:6px;">
-            <h4 style="margin:0">👥 Seguindo</h4>
-            <span class="spam">${userData.following}</span>
+      </div>
+
+      <div class="profile-counters">
+        <div class="counter-item">
+          <h4>Seguidores</h4>
+          <span class="spam">${userData.followers}</span>
         </div>
+        <div class="counter-item">
+          <h4>Seguindo</h4>
+          <span class="spam">${userData.following}</span>
+        </div>
+      </div>
+
+      <div id="repos-list" class="repo-section">
+        ${renderReposHtml(repos)}
+      </div>
     </div>
-`;
+  `;
+}
+
+function renderReposHtml(repos) {
+  if (!repos || repos.length === 0) {
+    return `<p class="no-repos">Nenhum repositório recente encontrado.</p>`;
+  }
+
+  const cards = repos.map(repo => {
+    const desc = repo.description ? `<p class="repo-desc">${repo.description}</p>` : '';
+    return `
+      <article class="repository-card">
+        <h4 class="repo-name"><a href="${repo.html_url}" target="_blank" rel="noopener">${repo.name}</a></h4>
+        ${desc}
+        <div class="repository-stats">
+          <span class="repo-badge">⭐ Stars: ${repo.stargazers_count || 0}</span>
+          <span class="repo-badge">🍴 Forks: ${repo.forks_count || 0}</span>
+          <span class="repo-badge">👀 Watchers: ${repo.watchers_count || 0}</span>
+          <span class="repo-badge">💻 Language: ${repo.language || '—'}</span>
+        </div>
+      </article>`;
+  }).join('');
+
+  return `
+    <h3 class="repo-section-title">Últimos repositórios</h3>
+    <div class="repositories">${cards}</div>
+  `;
 }
 
 function debounce(fn, wait = 400) {
@@ -64,12 +104,16 @@ function debounce(fn, wait = 400) {
 }
 
 export function bindSearch(handler) {
-  btnSearch.addEventListener('click', handler);
-  inputSearch.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') handler();
-  });
+  const btnSearch = getEl('btn-search');
+  const inputSearch = getEl('input-search');
 
-  // chamada debounced enquanto o usuário digita
-  const debounced = debounce(() => handler(), 500);
-  inputSearch.addEventListener('input', debounced);
+  if (btnSearch) btnSearch.addEventListener('click', handler);
+  if (inputSearch) {
+    inputSearch.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') handler();
+    });
+
+    const debounced = debounce(() => handler(), 500);
+    inputSearch.addEventListener('input', debounced);
+  }
 }
