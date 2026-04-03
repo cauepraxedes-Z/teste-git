@@ -1,44 +1,56 @@
-# Visualizador de Perfil do GitHub (simples)
+# Visualizador de Perfil do GitHub
 
-Pequeno projeto que busca e exibe informações de perfis do GitHub.
+Uma aplicação frontend leve que consulta a API pública do GitHub para exibir informações de perfil e repositórios recentes de um usuário.
 
-## Estrutura
+**Principais características**
+- Busca por nome de usuário do GitHub
+- Exibição de avatar, bio, seguidores/seguindo
+- Listagem dos repositórios recentes com Stars, Forks, Watchers e linguagem
+- Interface responsiva e sem dependências externas de build (apenas HTML/CSS/JS)
 
-- `index.html` - página principal (carrega `src/main.js` como `type="module"`).
-- `src/api.js` - responsabilidade de comunicação com a API do GitHub.
-- `src/ui.js` - manipulação do DOM, renderização e mensagens ao usuário.
-- `src/index.js` - orquestração (lógica de busca) e ponto de integração entre `api` e `ui`.
-- `src/main.js` - entrypoint que inicializa a aplicação no `DOMContentLoaded`.
+**Arquitetura (breve)**
+- `index.html` — ponto de entrada da aplicação
+- `src/api.js` — funções para comunicação com a API do GitHub (`fetchUser`, `fetchUserRepos`)
+- `src/ui.js` — renderização do DOM e utilitários de UI
+- `src/index.js` — lógica de orquestração (integra `api` e `ui`)
+- `src/main.js` — inicializador (DOMContentLoaded)
 
-## Pré-requisitos
+**Requisitos**
+- Navegador moderno com suporte a módulos ES (`type="module"`)
+- Servir os arquivos por HTTP (abrir via `file://` pode quebrar imports)
 
-É necessário servir os arquivos por HTTP para que os módulos ES6 funcionem corretamente no navegador (abrir o arquivo diretamente com `file://` pode causar erros).
-
-## Executando localmente
-
-Na raiz do projeto, execute um servidor simples (exemplos):
+**Como executar (rápido)**
+1. Abra um terminal na pasta do projeto (onde está este `README.md`).
+2. Inicie um servidor HTTP simples. Exemplos:
 
 ```bash
+# Com Python 3
 python -m http.server 8000
-```
 
-ou
-
-```bash
+# Ou com Node.js (http-server):
 npx http-server -p 8000
 ```
 
-Depois abra `http://localhost:8000` no navegador.
+3. Abra no navegador: `http://localhost:8000`
+4. No campo de busca digite um usuário (ex.: `octocat`) e pressione Buscar.
 
-## Observações
+**Exemplo de verificação rápida (curl)**
 
-- A UI usa um container in-page para mensagens ao usuário (substitui `alert()`).
-- O campo de busca possui debounce para reduzir número de requisições enquanto o usuário digita.
-- Caso queira melhorar: adicionar paginação de repositórios, cache local e testes unitários para funções puras.
+```bash
+curl -i http://localhost:8000/index.html
+```
 
-## Como contribuir
+**Desenvolvimento**
+- Não há build-step; edite os arquivos em `src/` e recarregue a página.
+- Sugestões de melhoria: adicionar testes unitários, cache local (LocalStorage) e paginação para repositórios.
 
-- Abra uma issue ou envie um pull request com melhorias.
+**Contribuição**
+- Abra uma issue descrevendo o problema ou a feature desejada.
+- Envie um pull request com mudanças pequenas e um README atualizado sobre o que foi alterado.
+
+**Licença & Contato**
+- Projeto fornecido sem licença explícita (adicione uma `LICENSE` se desejar).
+- Para dúvidas ou solicitações, abra uma issue no repositório local ou envie mensagem direta ao autor.
 
 ---
-Solucionei problemas básicos de duplicação no código, adicionei debounce e mensagens in-page. Teste localmente conforme instruções acima.
+_Atualizado:_ documentação criada para execução local e contribuição.
